@@ -1,0 +1,2 @@
+# Dinocord
+- Clone Coding Discord
