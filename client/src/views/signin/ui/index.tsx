@@ -1,67 +1,74 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { signin } from "../api/sigin.api";
-import type { User } from "../../../entities/User";
+import { setCookie } from "../../../shared/api/cookie";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
   const [name, setName] = useState<string>("")
-  const [user, setUser] = useState<User | null>(null)
+  const [email, setEmail] = useState<string>("")
+  const [password, setpassword] = useState<string>("")
+
+  const router = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const { user } = await signin(name)
-      setUser(user)
-      localStorage.setItem('user', JSON.stringify(user))
-      console.log("Successful Signin: ", user)
+      const { accessToken, refreshToken } = await signin({ name, email, password })
+      setCookie('accessToken', accessToken, { path: "/" })
+      setCookie('refreshToken', refreshToken, { path: "/" })
+      router("/chat")
+
     } catch (err) {
-      console.log("Failed Signin: ", err)
+      console.error(err)
     }
   }
-
-  const handleSignout = async () => {
-    localStorage.removeItem('user')
-    setUser(null)
-  }
-
-  useEffect(() => {
-    const currentUserData = localStorage.getItem('user')
-    if (currentUserData) setUser(JSON.parse(currentUserData))
-  }, [])
 
   return (
     <main className="bg-black text-white h-screen flex flex-col justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="w-md mx-auto p-5 bg-[#1A1A1E] rounded-md"
+        className="w-md mx-auto p-5 bg-[#222327] rounded-md"
       >
-        <h2 className="text-3xl font-bold">Dinocord 로그인</h2>
-        <section className="flex justify-between mx-2 p-2 bg-[#222327]">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="닉네임 입력..."
-            className="outline-none"
-          />
+        <h2 className="text-3xl font-bold text-center">Dinocord 로그인</h2>
+        <section className="flex flex-col gap-3 mx-2 p-2 ">
+          <div className="flex flex-col">
+            <label htmlFor="name">이름</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="이름 입력..."
+              className="outline-none bg-[#1A1A1E] rounded-sm px-1 py-2"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="email">이메일</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="이메일 입력..."
+              className="outline-none bg-[#1A1A1E] rounded-sm px-1 py-2"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="password">비밀번호</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setpassword(e.target.value)}
+              placeholder="비밀번호 입력..."
+              className="outline-none bg-[#1A1A1E] rounded-sm px-1 py-2"
+            />
+          </div>
           <button
             type="submit"
-            className="cursor-pointer"
+            className="cursor-pointer p-2 bg-blue-800 rounded-xl"
           >
             로그인
           </button>
         </section>
       </form>
-      {user &&
-        <>
-          <h2 className="text-2xl font-bold">Welcome, {user?.name}</h2>
-          <button
-            className="cursor-pointer"
-            onClick={handleSignout}
-          >
-            로그아웃
-          </button>
-        </>
-      }
     </main>
   )
 }
