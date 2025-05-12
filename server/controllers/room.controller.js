@@ -34,6 +34,6 @@ exports.create = async (req, res) => {
 
     return res.status(200).json({ room });
   } catch (error) {
-    return res.json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
