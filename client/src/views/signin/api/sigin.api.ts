@@ -1,12 +1,12 @@
-import axios from "axios";
+import type { SigninProps } from "../model/auth";
+import instance from "../../../shared/api/instance";
 
-export const signin = async (name: string) => {
-  const res = await axios.post(
-    import.meta.env.VITE_SERVER_URL + "api/users/signin",
-    {
-      name: name,
-    }
-  );
+export const signin = async ({ name, email, password }: SigninProps) => {
+  const res = await instance.post("/auth/signin", {
+    name,
+    email,
+    password,
+  });
 
   return res.data;
 };
