@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { CookiesProvider } from "react-cookie"
 import Main from "../views/main/ui"
 import Signin from "../views/signin/ui"
-import Chat from "../views/Chat/ui"
-import { CookiesProvider } from "react-cookie"
+import Channel from "../views/channel/ui"
 
 function Router() {
   return (
@@ -11,7 +11,7 @@ function Router() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/chat" element={<Chat />} />
+          <Route path="/channel" element={<Channel />} />
         </Routes>
       </BrowserRouter>
     </CookiesProvider>
