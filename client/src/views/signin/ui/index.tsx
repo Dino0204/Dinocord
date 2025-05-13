@@ -16,7 +16,7 @@ const Signin = () => {
       const { accessToken, refreshToken } = await signin({ name, email, password })
       setCookie('accessToken', accessToken, { path: "/" })
       setCookie('refreshToken', refreshToken, { path: "/" })
-      router("/chat")
+      router("/channel")
 
     } catch (err) {
       console.error(err)
