@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signin } from "../api/sigin.api";
+import { signin } from "../api/signin.api";
 import { setCookie } from "../../../shared/api/cookie";
 import { useNavigate } from "react-router-dom";
 
