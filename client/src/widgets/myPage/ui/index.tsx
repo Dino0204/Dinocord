@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCurrentUser } from "../api/mypage.api";
+import { getCurrentUser } from "../api/index.api";
 import type { User } from "../../../entities/User";
 
 const MyPage = () => {
@@ -20,14 +20,14 @@ const MyPage = () => {
   }, []);
 
   return (
-    <div className="flex gap-2  bg-[#222327] text-white py-2 px-3 rounded-xl">
+    <div className="flex fixed bottom-0 gap-2 border bg-[#222327] text-white py-2 px-3 rounded-xl">
       <section className="bg-gray-500 rounded-full w-10 h-10">
         {/* img */}
       </section>
       <section className="flex flex-col">
         <h2 className="font-bold text-base">{user?.name}</h2>
         <p className="text-sm">푸른 하늘</p>
-        <p>{user?.email}</p>
+        {/* <p>{user?.email}</p> */}
       </section>
     </div>
   )
