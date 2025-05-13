@@ -21,7 +21,7 @@ const RoomList = ({ className }: { className?: string }) => {
     fetchRooms();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async () => {
     try {
       if (!(roomName.trim().length > 0)) return;
       const res = await createRoom(roomName)
