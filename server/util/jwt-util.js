@@ -21,6 +21,7 @@ module.exports = {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       return {
         ok: true,
+        email: decoded.email,
       };
     } catch (err) {
       return {

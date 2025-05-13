@@ -11,8 +11,7 @@ const authJWT = (req, res, next) => {
 
     // token이 검증되었으면 req에 값을 세팅하고, 다음 콜백함수로 갑니다.
     if (result.ok) {
-      req.name = result.name;
-      req.email = result.email;
+      req.user = { email: result.email };
       next();
     }
     // 검증에 실패하거나 토큰이 만료되었다면 클라이언트에게 메세지를 담아서 응답합니다.
@@ -22,6 +21,11 @@ const authJWT = (req, res, next) => {
         message: result.message, // jwt가 만료되었다면 메세지는 'jwt expired'입니다.
       });
     }
+  } else {
+    res.status(401).send({
+      ok: false,
+      message: "No token provided",
+    });
   }
 };
 
